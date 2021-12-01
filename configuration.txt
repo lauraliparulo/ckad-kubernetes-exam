@@ -39,9 +39,61 @@ Inspect the config map for the pod:
 
 > kubectl exec configured-pod -- env
 
+An alternative way:
+
+apiVersion: v1
+kind: Pod
+metadata:
+  name: configured-pod
+spec:
+  containers:
+  - image: nginx:1.19.0
+    name: app
+    env:
+    - name: DATABASE_URL
+      valueFrom:
+        configMapKeyRef:
+          name: backend-config
+          key: database_url
+    - name: USERNAME
+      valueFrom:
+        configMapKeyRef:
+          name: backend-config
+          key: user
+          
+          
+Mounting configmap as volume
+
+apiVersion: v1
+kind: Pod
+metadata:
+  name: configured-pod
+spec:
+  containers:
+  - image: nginx:1.19.0
+    name: app
+    volumeMounts:
+    - name: config-volume
+      mountPath: /etc/config
+  volumes:
+  - name: config-volume
+    configMap:
+      name: backend-config
+
+
+To inspect the config map in the pod:
+$ kubectl exec -it configured-pod -- /bin/sh
+# ls -1 /etc/config
 
 ---------------------------------------------------------------------------------------------
 SECRET
+From literal:
+> $ kubectl create secret generic db-creds --from-literal=pwd=s3cre!
+From env file:
+> $ kubectl create secret generic db-creds --from-env-file=secret.env
+From ssh key:
+> $ kubectl create secret generic ssh-key --from-file=id_rsa=~/.ssh/id_rsa
+
 
 VOLUME
 

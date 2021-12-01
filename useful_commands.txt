@@ -39,3 +39,43 @@ To crete an object on the fly use create, apply with files or run:
 To create a yaml file template use the "dry-run" flag:
 > kubectl run frontend --image=nginx --restart=Never --port=80 -o yaml --dry-run=client > pod.yaml
 ---------------------------------------------------------------------------------------------
+You can delete both by the name or the yaml file:
+$ kubectl delete pod frontend
+pod "frontend" deleted
+$ kubectl delete -f pod.yaml
+pod "frontend" deleted
+-----------------------------------------------------------------------------------------------
+Edit a live object:
+> kubectl edit pod frontend
+Update a live object:
+$ kubectl apply -f pod.yaml
+pod/frontend configured
+-----------------------------------------------------------------------------------------------
+Replace a live object
+kubectl replace -f pod.yaml
+-----------------------------------------------------------------------------------------------
+If you use a docker image (as default from the docker hub register), you can use either the run command or a yaml file:
+
+> kubectl run hazelcast --image=hazelcast/hazelcast --restart=Never --port=5701 --env="DNS_DOMAIN=cluster" --labels="app=hazelcast,env=prod"
+
+This is the same as : kubectl create -f pod.yaml, with the following yaml file:
+  
+apiVersion: v1
+kind: Pod
+metadata:
+  name: hazelcast
+  labels:
+    app: hazelcast
+    env: prod
+spec:
+  containers:
+  - env:
+    - name: DNS_DOMAIN
+      value: cluster
+    image: hazelcast/hazelcast
+    name: hazelcast
+    ports:
+    - containerPort: 5701
+  restartPolicy: Never
+  
+  ------------------------------------------------------------------------------------------

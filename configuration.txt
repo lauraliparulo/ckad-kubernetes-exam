@@ -168,6 +168,8 @@ kubectl exec -it fs-secured -- /bin/sh
 
 --------------------------------------------------------------------------------------------           
 RESOURCEQUOTA
+kubectl create -f awesome-quota.yaml --namespace=team-awesome
+
 under spec hard:
 
 apiVersion: v1
@@ -185,5 +187,32 @@ spec:
 after creating the resource:
 > kubectl describe resourcequota awesome-quota --namespace=team-awesome
 
+The namespace expects quotas.Otherwise it gives error (forbidden)
+
+piVersion: v1
+kind: Pod
+metadata:
+  name: nginx
+spec:
+  containers:
+  - image: nginx:1.18.0
+    name: nginx
+    resources:
+      requests:
+        cpu: "0.5"
+        memory: "512m"
+      limits:
+        cpu: "1"
+        memory: "1024m"
+        
 --------------------------------------------------------------------------------------------     
 SERVICE ACCOUNT
+Get secret:
+> kubectl get secret default-token-bf8rh -o yaml
+
+Create custom service account:
+> kubectl create serviceaccount custom
+
+
+
+

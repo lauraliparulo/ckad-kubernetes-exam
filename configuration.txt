@@ -1,0 +1,52 @@
+CONFIGMAP
+With literal values:
+> kubectl create configmap db-config --from-literal=db=staging
+
+With environment variables in a file:
+>kubectl create configmap db-config --from-env-file=config.env
+
+From a single file:
+$ kubectl create configmap db-config --from-file=config.txt
+
+Directory containing file:
+$ kubectl create configmap db-config --from-file=app-config
+
+ConfigMap from yaml:
+
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: backend-config
+data:
+  database_url: jdbc:postgresql://localhost/test
+  user: fred
+  
+  
+To use the config map in the pod configuration you can put it under the "envFrom" section;
+apiVersion: v1
+kind: Pod
+metadata:
+  name: configured-pod
+spec:
+  containers:
+  - image: nginx:1.19.0
+    name: app
+    envFrom:
+    - configMapRef:
+        name: backend-config
+
+---------------------------------------------------------------------------------------------
+SECRET
+
+VOLUME
+
+SECURITY CONTEXT
+
+
+RESOURCE BOUNDARIES
+
+
+RESOURCEQUOTA
+
+
+SERVICE ACCOUNT

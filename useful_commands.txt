@@ -1,0 +1,34 @@
+set up context and namespace at the beginning of a section:
+
+> kubectl config set-context <context-of-question> --namespace=<namespace-of-question>
+---------------------------------------------------------------------------------------------
+Use alias:
+
+> alias k=kubectl; k version
+---------------------------------------------------------------------------------------------
+Get short names 
+
+> kubectl api-resources
+
+ex. persistentvolumeclaims  is "pvc"
+---------------------------------------------------------------------------------------------
+Delete pods immediately:
+
+> kubectl delete pod nginx --grace-period=0 --force
+---------------------------------------------------------------------------------------------
+use grep to find what you need:
+
+> kubectl describe pods | grep -C 10 "author=John Doe"
+> kubectl get pods -o yaml | grep -C 5 labels:
+---------------------------------------------------------------------------------------------
+Use help
+
+> kubectl create --help
+---------------------------------------------------------------------------------------------
+Explore fields
+
+> kubectl explain pods.spec 
+---------------------------------------------------------------------------------------------
+Get namespaces
+> k get ns
+---------------------------------------------------------------------------------------------

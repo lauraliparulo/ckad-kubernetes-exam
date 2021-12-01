@@ -131,15 +131,59 @@ spec:
     secret:
       secretName: ssh-key
       
-
-
+-------------------------------------------------------------------------------------------
 SECURITY CONTEXT
 
+apiVersion: v1
+kind: Pod
+metadata:
+  name: non-root
+spec:
+  containers:
+  - image: nginx:1.18.0
+    name: secured-container
+    securityContext:
+      runAsNonRoot: true
+      
+apiVersion: v1
+kind: Pod
+metadata:
+  name: fs-secured
+spec:
+  securityContext:
+    fsGroup: 3500
+  containers:
+  - image: nginx:1.18.0
+    name: secured-container
+    volumeMounts:
+    - name: data-volume
+      mountPath: /data/app
+  volumes:
+  - name: data-volume
+    emptyDir: {}     
+      
+      
+kubectl exec -it fs-secured -- /bin/sh
 
-RESOURCE BOUNDARIES
 
-
+--------------------------------------------------------------------------------------------           
 RESOURCEQUOTA
+under spec hard:
 
+apiVersion: v1
+kind: ResourceQuota
+metadata:
+  name: awesome-quota
+spec:
+  hard:
+    pods: 2
+    requests.cpu: "1"
+    requests.memory: 1024m
+    limits.cpu: "4"
+    limits.memory: 4096m
 
+after creating the resource:
+> kubectl describe resourcequota awesome-quota --namespace=team-awesome
+
+--------------------------------------------------------------------------------------------     
 SERVICE ACCOUNT

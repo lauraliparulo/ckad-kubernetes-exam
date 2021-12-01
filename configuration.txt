@@ -87,6 +87,7 @@ $ kubectl exec -it configured-pod -- /bin/sh
 
 ---------------------------------------------------------------------------------------------
 SECRET
+
 From literal:
 > $ kubectl create secret generic db-creds --from-literal=pwd=s3cre!
 From env file:
@@ -94,8 +95,43 @@ From env file:
 From ssh key:
 > $ kubectl create secret generic ssh-key --from-file=id_rsa=~/.ssh/id_rsa
 
+In the yaml file use "secretRef"
 
-VOLUME
+apiVersion: v1
+kind: Pod
+metadata:
+  name: configured-pod
+spec:
+  containers:
+  - image: nginx:1.19.0
+    name: app
+    envFrom:
+    - secretRef:
+        name: db-creds
+        
+Check secrets with:
+> kubectl exec configured-pod -- env
+
+Secret as a volume:
+
+apiVersion: v1
+kind: Pod
+metadata:
+  name: configured-pod
+spec:
+  containers:
+  - image: nginx:1.19.0
+    name: app
+    volumeMounts:
+    - name: secret-volume
+      mountPath: /var/app
+      readOnly: true
+  volumes:
+  - name: secret-volume
+    secret:
+      secretName: ssh-key
+      
+
 
 SECURITY CONTEXT
 

@@ -32,3 +32,10 @@ Explore fields
 Get namespaces
 > k get ns
 ---------------------------------------------------------------------------------------------
+To crete an object on the fly use create, apply with files or run:
+> kubectl create -f pod.yaml
+> kubectl run frontend --image=nginx --restart=Never --port=80
+---------------------------------------------------------------------------------------------
+To create a yaml file template use the "dry-run" flag:
+> kubectl run frontend --image=nginx --restart=Never --port=80 -o yaml --dry-run=client > pod.yaml
+---------------------------------------------------------------------------------------------

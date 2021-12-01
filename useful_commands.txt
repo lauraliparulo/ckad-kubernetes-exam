@@ -16,6 +16,15 @@ use grep to find what you need:
 
 > kubectl describe pods | grep -C 10 "author=John Doe"
 > kubectl get pods -o yaml | grep -C 5 labels:
+
+to get the ip address as well:
+k get pods -n ckad-prep -o wide  
+
+
+Create a temporary pod with the IP
+> k run busybox --image=busybox --restart=Never --rm -it -- wget -0 192.168.60.190:80
+
+removed at the end
 ---------------------------------------------------------------------------------------------
 Use help
 

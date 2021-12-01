@@ -35,6 +35,11 @@ spec:
     - configMapRef:
         name: backend-config
 
+Inspect the config map for the pod:
+
+> kubectl exec configured-pod -- env
+
+
 ---------------------------------------------------------------------------------------------
 SECRET
 

@@ -32,4 +32,5 @@ Get the logs of the container:
 
 kubectl logs business-app -c configurer
 --------------------------------------------------------------------------------------------------
+
 Side car - Container providing helper functionality

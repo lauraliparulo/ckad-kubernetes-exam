@@ -31,6 +31,7 @@ spec:
 Get the logs of the container:
 
 kubectl logs business-app -c configurer
+kubectl logs business-app --container=c1
 --------------------------------------------------------------------------------------------------
 
 - Side car - Container providing helper functionality

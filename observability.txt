@@ -35,3 +35,20 @@ Startup probe:
         port: 80
       initialDelaySeconds: 3
       periodSeconds: 15
+
+
+
+To explore you can also use
+
+> kubectl get events
+
+---------------------------
+DEBUG:
+
+kubectl alpha debug -it minimal-pod --image=busybox
+
+OBSERVE
+> minikube addons enable metrics-server
+> kubectl top nodes
+> kubectl top pod frontend
+

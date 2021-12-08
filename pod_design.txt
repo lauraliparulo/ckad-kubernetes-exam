@@ -96,3 +96,71 @@ Update container image:
 Look at the second revision:
 >  kubectl rollout history deployments my-deploy --revision=2
 
+Rollout to a previous revision:
+> kubectl rollout undo deployment my-deploy --to-revision=1
+
+
+Manual scaling a deployment:
+>  kubectl scale deployment my-deploy --replicas=5
+
+
+Autoscaling
+- Horizontal (HPA) - standard
+- Vertical (VPA)
+
+Autoscale:
+> kubectl autoscale deployment my-deploy --cpu-percent=70 --min=2 --max=8
+> kubectl get hpa
+
+-----------------------------------------------------
+JOBS
+
+> kubectl create job counter --image=nginx -- /bin/sh -c 'counter=0; \
+  while [ $counter -lt 3 ]; do counter=$((counter+1)); echo "$counter"; \
+  sleep 3; done;' 
+  
+ 
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: counter
+spec:
+  template:
+    spec:
+      containers:
+      - name: counter
+        image: nginx
+        command:
+        - /bin/sh
+        - -c
+        - counter=0; while [ $counter -lt 3 ]; do counter=$((counter+1)); \
+          echo "$counter"; sleep 3; done;
+      restartPolicy: Never
+  
+  Parameters:
+  - spec.template.spec.completions
+  - spec.template.spec.parallelism
+  
+  
+  CRONJOB
+  >kubectl create cronjob current-date --schedule="* * * * *" --image=nginx -- /bin/sh -c 'echo "Current date: $(date)"'
+  > kubectl get cronjobs
+  
+  apiVersion: batch/v1beta1
+kind: CronJob
+metadata:
+  name: current-date
+spec:
+  schedule: "* * * * *"
+  jobTemplate:
+    spec:
+      template:
+        spec:
+          containers:
+          - name: current-date
+            image: nginx
+            args:
+            - /bin/sh
+            - -c
+            - 'echo "Current date: $(date)"'
+          restartPolicy: OnFailure

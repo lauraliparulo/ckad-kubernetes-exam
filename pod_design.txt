@@ -41,4 +41,58 @@ spec:
 In the commands user "--selector" or "-l"
 > kubectl get pods -l 'team in (shiny, legacy)',app=v1.2.4 --show-labels
 
+--------------------------
+ANNOTATIONS
+For descriptive metadata you can use annotations:
+
+apiVersion: v1
+kind: Pod
+metadata:
+  name: annotated-pod
+  annotations:
+    commit: 866a8dc
+    author: 'Benjamin Muschko'
+    branch: 'bm/bugfix'
+spec:
+  containers:
+  - image: nginx
+    name: nginx
+    
+> kubectl describe pod annotated-pod | grep -C 2 Annotations:
+
+add / Modify annotation for a live object:
+kubectl annotate pod annotated-pod oncall='800-555-2000' --overwrite
+
+-------------------------------------------------------------------
+Replica Set
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: my-deploy
+  labels:
+    app: my-deploy
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: my-deploy
+  template:
+    metadata:
+      labels:
+        app: my-deploy
+    spec:
+      containers:
+      - name: nginx
+        image: nginx:1.14.2
+
+--------------------------------------------------
+Revision rollout
+> kubectl rollout history deployment my-deploy
+
+Update container image:
+>  kubectl set image deployment my-deploy nginx=nginx:1.19.2
+
+Look at the second revision:
+>  kubectl rollout history deployments my-deploy --revision=2
 

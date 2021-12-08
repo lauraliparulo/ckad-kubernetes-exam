@@ -17,6 +17,28 @@ spec:
   - image: nginx
     name: nginx
     
+    
+Overwrite labels:
+> kubectl label pod labeled-pod region=us --overwrite
+pod/labeled-pod labeled
+    
 see labels:
 > kubectl describe pod labeled-pod | grep -C 2 Labels:
+> kubectl get pod labeled-pod --show-labels
+
+------------------------------------------
+Label selector
+
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: frontend-network-policy
+spec:
+  podSelector:
+    matchLabels:
+      tier: frontend
+     
+In the commands user "--selector" or "-l"
+> kubectl get pods -l 'team in (shiny, legacy)',app=v1.2.4 --show-labels
+
 

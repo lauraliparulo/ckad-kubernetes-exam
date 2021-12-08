@@ -1,0 +1,22 @@
+
+Add labels:
+
+> kubectl run labeled-pod --image=nginx --restart=Never --labels=tier=backend,env=dev
+
+With yaml:
+
+apiVersion: v1
+kind: Pod
+metadata:
+  name: labeled-pod
+  labels:
+    env: dev
+    tier: backend
+spec:
+  containers:
+  - image: nginx
+    name: nginx
+    
+see labels:
+> kubectl describe pod labeled-pod | grep -C 2 Labels:
+

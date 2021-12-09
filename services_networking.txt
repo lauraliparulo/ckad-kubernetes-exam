@@ -24,6 +24,7 @@ spec:
     app: nginx-service
   ports:
   - port: 80
+    protocol: TCP (default)
     targetPort: 80
     ---------------------------------
     

@@ -1,1 +1,99 @@
+Service Types
+- ClusterIP - only reachable within the cluster
+. Nodeport  - accessible from the outside , node´s IP with static port exposure
+- LoadBalancer - expose the service externally
+- ExternalName - map a service to a dns name
 
+Create service
+>  kubectl create service clusterip nginx-service --tcp=80:80
+
+Use "--expose" to expose a pod or deployment:
+> kubectl run nginx --image=nginx --restart=Never --port=80 --expose
+
+For an existing deploment you can exspose the pods:
+> kubectl expose deployment my-deploy --port=80 --target-port=8ß
+
+A Yaml definition:
+apiVersion: v1
+kind: Service
+metadata:
+  name: nginx-service
+spec:
+  type: ClusterIP
+  selector:
+    app: nginx-service
+  ports:
+  - port: 80
+    targetPort: 80
+    ---------------------------------
+    
+ Listing Services
+ > kubectl get services
+ 
+ Describe service
+ > kubectl describe service nginx-service
+ 
+ -------------------------------
+To establish a connection to the Kubernetes API server from localhost:
+> kubectl proxy --port=9999
+> curl -L localhost:9999/api/v1/namespaces/default/services/nginx/proxy
+
+enhance a service to use nodeport instead of clusterId:
+> kubectl patch service nginx -p '{ "spec": {"type": "NodePort"} }'
+
+---------------------------------------------
+Network policy 
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: api-allow
+spec:
+  podSelector:
+    matchLabels:
+      app: payment-processor
+      role: api
+  ingress:
+  - from:
+    - podSelector:
+        matchLabels:
+          app: coffeeshop
+ 
+ 
+ List network policy
+ > kubectl get networkpolicy
+ 
+ Render details:
+>  kubectl describe networkpolicy api-allow
+ 
+ Disallowing traffic:
+ apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: default-deny-all
+spec:
+  podSelector: {}
+  policyTypes:
+  - Ingress
+  - Egress
+  
+  
+  
+  To use one single port:
+  
+  spec:
+  podSelector:
+    matchLabels:
+      app: backend
+  ingress:
+  - from:
+    - podSelector:
+        matchLabels:
+          app: frontend
+    ports:
+    - protocol: TCP
+      port: 8080
+      
+      
+  
+
+ 

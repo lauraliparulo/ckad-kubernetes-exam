@@ -158,6 +158,12 @@ You can use the command-line option -o wide to retrieve the IP address of the Po
 
 $ kubectl get pod nginx --namespace=ckad -o wide
 ---------------------------------------------------------------------------------------------------------
+To use the API with curl you need the proxy
+> kubectl proxy port=8001 &
+
+It takes care of the TLS communication
+curl http://localhost:8001
+
 
 ---------------------------------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------------------------------

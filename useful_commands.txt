@@ -180,5 +180,9 @@ kubectl explain pods.spec
 ---------------------------------------------------------------------------------------------------------
 kubectl get pods --all-namespaces
 ---------------------------------------------------------------------------------------------------------
-
+Create service account
+> kubectl create sa mysa
+Use it in a pod:
+> kubectl run --serviceaccount=mysa --image=busybox mynewpod
+> kubecl get pods mynewpod -o yaml
 ---------------------------------------------------------------------------------------------------------

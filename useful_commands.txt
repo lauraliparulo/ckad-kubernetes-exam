@@ -83,6 +83,11 @@ spec:
     - containerPort: 5701
   restartPolicy: Never
   
+  
+  
+  add labels interactively
+  
+>   kubectl label pods your-pod-name enable=true
   ------------------------------------------------------------------------------------------
 List pods:
 > kubectl get pods

@@ -95,8 +95,13 @@ access logs:
 > kubectl logs hazelcast
 use "-f" to stream the logs in real time
 > kubectl logs hazelcast -f
+
 access logs of the previous container with "-p"
 > kubectl logs hazelcast -p
+
+to get the timestamp
+> kubectl logs deployment/flask --timestamps
+
 --------------------------------------------------------------------------------------------
 Open a shell in the container to inspect it:
 $ kubectl exec -it hazelcast -- /bin/sh

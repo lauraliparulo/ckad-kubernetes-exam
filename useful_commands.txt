@@ -191,3 +191,8 @@ Use it in a pod:
 > kubectl run --serviceaccount=mysa --image=busybox mynewpod
 > kubecl get pods mynewpod -o yaml
 ---------------------------------------------------------------------------------------------------------
+
+Interactive session:
+> kubectl run -i -t alpine-interactive --image=alpine -- sh
+> kubectl delete deployment alpine-interactive
+

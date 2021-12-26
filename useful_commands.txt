@@ -201,3 +201,6 @@ Interactive session:
 > kubectl run -i -t alpine-interactive --image=alpine -- sh
 > kubectl delete deployment alpine-interactive
 
+---------------------------------------------------------------------------------------------------------
+update the deployment
+> kubectl replace -f flask_deployment.yaml

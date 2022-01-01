@@ -9,7 +9,9 @@ Use alias:
 alias k=kubectl
 
 export do="--dry-run=client -o yaml"
-
+-----------------------------------------------
+Change context
+> k config set-context --current --namespace=task
 
 ---------------------------------------------------------------------------------------------
 Get short names 

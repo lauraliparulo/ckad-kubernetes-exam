@@ -1,0 +1,28 @@
+Searching lines: 
+
+    EXC than /texttofind 
+------------------
+Indenting lines:
+
+shift indentation with:
+
+":set shiftwidth=2"
+
+then use it :
+- enter visual line mode with SHIFT+V
+- select code and use SHIFT+>  or SHIFT+,
+
+
+
+--------------------
+Jump to line 14
+
+:14
+
+.............................
+Output to a file:
+
+k logs alta3pod | sudo tee ~/opt/answers/mypod.logs
+
+--------------------
+

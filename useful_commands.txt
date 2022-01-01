@@ -5,6 +5,12 @@ set up context and namespace at the beginning of a section:
 Use alias:
 
 > alias k=kubectl; k version
+
+alias k=kubectl
+
+export do="--dry-run=client -o yaml"
+
+
 ---------------------------------------------------------------------------------------------
 Get short names 
 
